@@ -284,8 +284,8 @@ export default function HomeSection() {
           >
             {[
               { href: "https://github.com/GlitchZap", icon: <FaGithub className="w-8 h-8" />, label: "GitHub" },
-              { href: "https://twitter.com/GlitchZap", icon: <FaTwitter className="w-8 h-8" />, label: "Twitter" },
-              { href: "https://linkedin.com/in/GlitchZap", icon: <FaLinkedin className="w-8 h-8" />, label: "LinkedIn" }
+              { href: "https://x.com/AayushKumar666", icon: <FaTwitter className="w-8 h-8" />, label: "Twitter" },
+              { href: "https://www.linkedin.com/in/aayush-kumar-30019728a/", icon: <FaLinkedin className="w-8 h-8" />, label: "LinkedIn" }
             ].map((social) => (
               <motion.a 
                 key={social.href}

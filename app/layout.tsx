@@ -7,9 +7,16 @@ import InteractiveCursor from "./components/ui/InteractiveCursor";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Aayush Patel | Full Stack Developer",
-  description: "Portfolio of Aayush Patel, a full stack developer specializing in React, Next.js, and Node.js",
+  title: "Aayush Kumar | Full Stack Developer",
+  description: "Portfolio of Aayush Kumar, a full stack developer specializing in React, Next.js, and Node.js and UI/UX designer.",
+  icons: {
+    icon: "/profile.ico",
+    shortcut: "/profile.ico",
+    apple: "/profile.ico",
+  },
 };
+
+
 
 export default function RootLayout({
   children,

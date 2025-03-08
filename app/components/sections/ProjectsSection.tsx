@@ -1,169 +1,191 @@
 "use client";
 
 import React, { useRef } from "react";
-import { motion, useScroll, useTransform, useMotionTemplate, useSpring, useInView } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, useMotionTemplate } from "framer-motion";
 import Image from "next/image";
-import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
-
-// Define project data type
-interface Project {
-  title: string;
-  description: string;
-  image: string;
-  tags: string[];
-  github: string;
-  demo: string;
-  featured?: boolean;
-  type?: 'web' | 'mobile' | 'ai';
-}
+import Link from "next/link";
+import { AccentricityBackground } from "../ui/aceternity/Container";
+import { LensMagnifier } from "../ui/lens-magnifier";
+import { cn } from "../../lib/utils";
+import {
+  HiCode,
+  HiExternalLink,
+  HiLightningBolt,
+  HiChip,
+  HiGlobe,
+  HiArrowRight,
+} from "react-icons/hi";
 
 // Project data
-const projectData: Project[] = [
+const projects = [
   {
-    title: "VibeOut",
-    description: "A social platform for discovering music events and connecting with fellow enthusiasts. Built with Next.js, MongoDB, and integrated with Spotify API.",
-    image: "/vibeout.png",
-    tags: ["Next.js", "MongoDB", "Tailwind CSS", "Spotify API"],
-    github: "https://github.com/GlitchZap/vibeout",
-    demo: "https://vibeout-demo.vercel.app",
+    id: 1,
+    title: "Treasure Hunt AI-Searching Techniques",
+    description:
+      "Developed interactive treasure hunt visualization in React showcasing DFS, BFS, and A* algorithms. Implemented priority queue and graph traversal techniques with responsive step-by-step animation.",
+    image: "/project1.jpg",
+    category: "Algorithms & Visualization",
+    liveLink: "https://treasure-hunt-ai-searching-techniques.vercel.app/",
+    githubLink: "https://github.com/GlitchZap/Treasure-Hunt-AISearchingTechniques",
+    technologies: ["React", "A* Algorithm", "DFS", "BFS", "Data Structures"],
+    icon: <HiLightningBolt className="text-blue-400 w-8 h-8" />,
     featured: true,
-    type: 'web'
+    bgColor: "from-blue-900/20 via-black/60 to-purple-900/20",
+    accentColor: "blue",
   },
   {
-    title: "OnboardX",
-    description: "Interactive onboarding solution for product teams to create guided user experiences. Features drag-and-drop editor and analytics dashboard.",
+    id: 2,
+    title: "Dynamic Grid System",
+    description:
+      "Built dynamic grid system with configurable parameters and real-time performance analytics dashboard. Leveraged React hooks for state management with Tailwind CSS for responsive design.",
     image: "/onboardx.png",
-    tags: ["React", "Node.js", "Express", "PostgreSQL"],
-    github: "https://github.com/GlitchZap/onboardx",
-    demo: "https://onboardx-app.herokuapp.com",
-    type: 'web'
-  },
-  {
-    title: "DeepFake Detector",
-    description: "AI-powered tool that detects manipulated media with high accuracy. Utilizes deep learning models and computer vision techniques.",
-    image: "/deepfake.png",
-    tags: ["Python", "TensorFlow", "Flask", "React"],
-    github: "https://github.com/GlitchZap/deepfake-detector",
-    demo: "https://deepfake-detect.ai",
+    category: "Web Development",
+    liveLink: "https://example.com/",
+    githubLink: "https://github.com/GlitchZap/",
+    technologies: ["React", "Hooks", "Tailwind CSS", "Analytics Dashboard"],
+    icon: <HiChip className="text-emerald-400 w-8 h-8" />,
     featured: true,
-    type: 'ai'
+    bgColor: "from-emerald-900/20 via-black/60 to-blue-900/20",
+    accentColor: "emerald",
   },
   {
-    title: "CodeSync",
-    description: "Real-time collaborative code editor with syntax highlighting, video chat, and version control integration.",
-    image: "/codesync.png",
-    tags: ["Socket.io", "Express", "MongoDB", "WebRTC"],
-    github: "https://github.com/GlitchZap/codesync",
-    demo: "https://codesync-collab.vercel.app",
-    type: 'web'
+    id: 3,
+    title: "Zombie Escape - 2D Survival Game",
+    description:
+      "Developed a 2D grid-based zombie survival game featuring real-time pathfinding. Implemented the A* algorithm for intelligent zombie movement and player navigation. Designed dynamic difficulty scaling by adjusting grid size and obstacles for varied gameplay.",
+    image: "/project2.jpg",
+    category: "Game Development",
+    liveLink: "https://dead-run-zombie-escapev2.vercel.app/",
+    githubLink: "https://github.com/GlitchZap/DeadRun-ZombieEscapev2",
+    technologies: ["A* Pathfinding", "Game Development", "Real-time Interactions", "UI/UX Design"],
+    icon: <HiGlobe className="text-purple-400 w-8 h-8" />,
+    featured: true,
+    bgColor: "from-purple-900/20 via-black/60 to-indigo-900/20",
+    accentColor: "purple",
+  },
+  {
+    id: 4,
+    title: "Frontend Website Replications",
+    description:
+      "Developed multiple responsive website clones, including a Netflix clone, using HTML, CSS, and @media queries for adaptability across different screen sizes. Implemented mobile-first design principles to ensure a seamless user experience on various devices.",
+    image: "/project4.jpg",
+    category: "Frontend Development",
+    liveLink: "https://github.com/GlitchZap/",
+    githubLink: "https://github.com/GlitchZap/",
+    technologies: ["HTML", "CSS", "Flexbox", "Grid", "Responsive Design"],
+    icon: <HiCode className="text-red-400 w-8 h-8" />,
+    featured: false,
+    bgColor: "from-red-900/20 via-black/60 to-orange-900/20",
+    accentColor: "red",
   }
 ];
 
-// Accentricity UI card with optimized hover effect
-const ProjectCard = ({ project, index, style }: { project: Project; index: number; style?: React.CSSProperties }) => {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const mouseX = useSpring(0, { stiffness: 500, damping: 100 });
-  const mouseY = useSpring(0, { stiffness: 500, damping: 100 });
-  
-  // Track mouse position for instant hover effects
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    mouseX.set(x);
-    mouseY.set(y);
-  };
-  
-  // Reset position on mouse leave
-  const handleMouseLeave = () => {
-    mouseX.set(0);
-    mouseY.set(0);
-  };
-  
-  // Dynamic mask for hover effect
-  const maskImage = useMotionTemplate`radial-gradient(120px at ${mouseX}px ${mouseY}px, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.85) 70%)`;
-  const isInView = useInView(cardRef, { once: true, amount: 0.3 });
+// Project card component with lens magnification effect
+interface Project {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  category: string;
+  liveLink: string;
+  githubLink: string;
+  technologies: string[];
+  icon: JSX.Element;
+  featured: boolean;
+  bgColor: string;
+  accentColor: string;
+}
+
+const ProjectCard = ({ project, className }: { project: Project; className?: string }) => {
+  // Get the appropriate accent color for hover states
+  const accentColorClass = `${project.accentColor}-500`;
 
   return (
     <motion.div
-      ref={cardRef}
-      initial={{ opacity: 0, y: 20 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="relative bg-gradient-to-br from-purple-900/20 via-black/70 to-blue-900/20 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10"
-      style={style}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+      className={cn(
+        "group relative flex flex-col justify-between overflow-hidden rounded-xl border border-white/10 bg-gradient-to-br backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/20 hover:-translate-y-1",
+        project.bgColor,
+        className
+      )}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
     >
-      {/* Image */}
-      <div className={`relative ${project.featured ? 'h-60' : 'h-48'} overflow-hidden`}>
-        <Image
-          src={project.image}
-          alt={project.title}
-          fill
-          sizes="(max-width: 768px) 100vw, 50vw"
-          className="object-cover transition-transform duration-500 hover:scale-110"
-          priority={index < 2}
-        />
-        
-        {/* Mask overlay for hover effect */}
-        <motion.div 
-          className="absolute inset-0 bg-gradient-to-b from-black/0 via-black/0 to-black/80"
-          style={{ maskImage }}
-        />
-        
-        {/* Type badge */}
-        {project.type && (
-          <div className="absolute top-3 right-3 px-2 py-1 text-xs font-medium rounded-md bg-black/40 backdrop-blur-sm border border-white/10">
-            {project.type === 'web' && 'Web App'}
-            {project.type === 'mobile' && 'Mobile App'}
-            {project.type === 'ai' && 'AI Project'}
+      <div className="flex flex-1 flex-col gap-4">
+        {/* Project Header with Lens Effect */}
+        <div className="h-52 w-full overflow-hidden rounded-t-xl">
+          <LensMagnifier>
+            <div className="relative h-full w-full overflow-hidden">
+              <Image
+                src={project.image}
+                alt={project.title}
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-110 opacity-70"
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-transparent"></div>
+            </div>
+          </LensMagnifier>
+          
+          {/* Project Category Badge */}
+          <div className="absolute top-4 right-4 z-10">
+            <div className="text-sm font-medium text-gray-300 bg-black/50 px-3 py-1 rounded-full">
+              {project.category}
+            </div>
           </div>
-        )}
-      </div>
-
-      {/* Content */}
-      <div className="p-6 flex flex-col justify-between h-[calc(100%-12rem)]">
-        <div>
-          <div className="flex justify-between items-start mb-2">
-            <h3 className="text-xl font-bold text-white group-hover:text-purple-400 transition-colors">
-              {project.title}
-            </h3>
-            {project.featured && (
-              <span className="px-2 py-1 text-xs font-medium rounded-full bg-purple-500/20 border border-purple-500/30 text-purple-300">
-                Featured
+          
+          {/* Project Icon */}
+          <div className="absolute top-4 left-4 z-10">
+            <div className={`inline-flex rounded-xl border border-${accentColorClass}/30 bg-${accentColorClass}/10 p-3`}>
+              {project.icon}
+            </div>
+          </div>
+        </div>
+        
+        {/* Project Content */}
+        <div className="flex flex-col gap-2 p-6">
+          <h3 className="text-xl font-bold text-white">{project.title}</h3>
+          <p className="text-sm text-gray-300 line-clamp-3">{project.description}</p>
+          
+          {/* Technologies */}
+          <div className="flex flex-wrap gap-2 mt-4 mb-6">
+            {project.technologies.slice(0, 3).map((tech: string, i: number) => (
+              <span
+                key={i}
+                className={`rounded-md border border-${accentColorClass}/30 bg-${accentColorClass}/10 px-2 py-1 text-xs text-${accentColorClass} backdrop-blur-md`}
+              >
+                {tech}
+              </span>
+            ))}
+            {project.technologies.length > 3 && (
+              <span className="rounded-md bg-gray-800/50 px-2 py-1 text-xs text-gray-400">
+                +{project.technologies.length - 3} more
               </span>
             )}
           </div>
-          
-          <p className="text-gray-300 text-sm mb-4 line-clamp-3">{project.description}</p>
-          
-          {/* Tags */}
-          <div className="flex flex-wrap gap-2 mb-4">
-            {project.tags.map((tag, idx) => (
-              <span 
-                key={idx}
-                className="px-2 py-1 bg-blue-900/30 border border-blue-500/30 rounded-md text-xs text-blue-300"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
         </div>
+      </div>
 
-        {/* Links */}
-        <div className="flex gap-4 mt-auto pt-4 border-t border-white/10">
-          <a href={project.github} target="_blank" rel="noreferrer" className="group flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
-            <FaGithub className="group-hover:text-purple-400" /> 
-            <span>GitHub</span>
-            <span className="w-0 h-px bg-purple-500 group-hover:w-full transition-all duration-300"/>
+      {/* Project Links */}
+      <div className="p-6 pt-0">
+        <div className="flex flex-wrap items-center gap-3">
+          <a
+            href={project.liveLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`inline-flex items-center gap-1 rounded-lg border border-${accentColorClass}/50 bg-${accentColorClass}/20 px-3 py-1.5 text-sm font-medium text-${accentColorClass} transition-all duration-300 hover:bg-${accentColorClass}/30`}
+          >
+            <HiExternalLink className="text-lg" />
+            <span>Live Preview</span>
           </a>
-          <a href={project.demo} target="_blank" rel="noreferrer" className="group flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
-            <FaExternalLinkAlt className="group-hover:text-blue-400" /> 
-            <span>Live Demo</span>
-            <span className="w-0 h-px bg-blue-500 group-hover:w-full transition-all duration-300"/>
+          <a
+            href={project.githubLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-sm font-medium text-gray-300 transition-all duration-300 hover:bg-white/10"
+          >
+            <HiCode className="text-lg" />
+            <span>Source Code</span>
           </a>
         </div>
       </div>
@@ -172,92 +194,92 @@ const ProjectCard = ({ project, index, style }: { project: Project; index: numbe
 };
 
 export default function ProjectsSection() {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ 
-    target: ref,
-    offset: ["start end", "end start"] 
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // Scroll animations with spring physics for smoother effects
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
   });
-  
-  const opacity = useTransform(scrollYProgress, [0, 0.2], [0, 1]);
-  const isInView = useInView(ref, { once: false, amount: 0.1 });
+
+  // Smoother scroll progress with spring
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+
+  const bgY = useTransform(smoothProgress, [0, 1], ["0%", "30%"]);
+  const bgYStyle = useMotionTemplate`${bgY}`;
+
 
   return (
-    <section id="projects" className="py-20 relative" ref={ref}>
-      {/* Dynamic background */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-purple-900/10 to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-blue-900/10 to-transparent" />
-      </div>
+    <section id="projects" ref={sectionRef} className="relative overflow-hidden py-32">
+      {/* Accentricity Background */}
+      <AccentricityBackground
+        variant="circuit"
+        intensity={0.5}
+        style={{ y: bgYStyle } as React.CSSProperties}
+      />
 
-      <motion.div 
-        className="container mx-auto px-4 relative z-10"
-        style={{ opacity }}
-      >
+      <div className="container relative z-10 mx-auto px-6">
+        {/* Section title */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
+          className="mb-20 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-16"
+          viewport={{ once: true }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
-            My <span className="text-gradient bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-blue-500">Projects</span>
+          <h2 className="mb-8 text-3xl font-bold text-white md:text-5xl">
+            My <span className="bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text text-transparent">Projects</span>
           </h2>
-          <p className="max-w-2xl mx-auto text-gray-400">
-            A showcase of my recent work, featuring web applications and design projects.
-            Each project represents different challenges and technologies I have worked with.
+          <p className="mx-auto max-w-2xl text-lg text-gray-300">
+            A collection of my recent projects showcasing my skills and expertise in various technologies.
+            Each project represents a unique challenge and solution.
           </p>
         </motion.div>
 
-        {/* Bento grid layout for more appealing and even presentation */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6">
-          {/* Featured project - spans 7 columns */}
-          <ProjectCard 
-            project={projectData[0]} 
-            index={0} 
-            style={{ gridColumn: "span 7", height: '550px' }} 
-          />
+        {/* Well-organized Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-6 max-w-7xl mx-auto">
+          {/* Featured Project - Takes 2/3 of the grid */}
+          <div className="col-span-1 md:col-span-6 lg:col-span-8">
+            <ProjectCard project={projects[0]} className="h-full" />
+          </div>
           
-          {/* Second project - spans 5 columns */}
-          <ProjectCard 
-            project={projectData[1]} 
-            index={1} 
-            style={{ gridColumn: "span 5", height: '550px' }} 
-          />
+          {/* Second Project - Takes 1/3 of the grid */}
+          <div className="col-span-1 md:col-span-6 lg:col-span-4">
+            <ProjectCard project={projects[1]} className="h-full" />
+          </div>
           
-          {/* Third project - spans 5 columns */}
-          <ProjectCard 
-            project={projectData[2]} 
-            index={2} 
-            style={{ gridColumn: "span 5", height: '500px' }} 
-          />
+          {/* Third Project - Takes 1/3 of the grid */}
+          <div className="col-span-1 md:col-span-3 lg:col-span-4">
+            <ProjectCard project={projects[2]} className="h-full" />
+          </div>
           
-          {/* Fourth project - spans 7 columns */}
-          <ProjectCard 
-            project={projectData[3]} 
-            index={3} 
-            style={{ gridColumn: "span 7", height: '500px' }} 
-          />
+          {/* Fourth Project - Takes 2/3 of the grid */}
+          <div className="col-span-1 md:col-span-3 lg:col-span-8">
+            <ProjectCard project={projects[3]} className="h-full" />
+          </div>
         </div>
-        
-        {/* View all projects button */}
-        <div className="flex justify-center mt-12">
-          <motion.a
-            href="/projects"
-            className="group relative inline-flex items-center justify-center px-8 py-3 overflow-hidden font-medium text-white rounded-full"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <span className="absolute inset-0 w-full h-full bg-gradient-to-br from-purple-600 to-blue-600 opacity-70"></span>
-            <span className="absolute bottom-0 right-0 block w-64 h-64 mb-32 mr-4 transition-all duration-500 origin-bottom-left transform rotate-45 translate-x-24 bg-pink-500 opacity-30 group-hover:rotate-90 ease"></span>
-            <span className="relative z-10 flex items-center gap-2">
-              View All Projects
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </span>
-          </motion.a>
+
+        {/* View More Button redirecting to /projects */}
+        <div className="mt-16 text-center">
+          <Link href="/projects">
+            <motion.button
+              className="group relative inline-flex items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-purple-600/80 to-blue-600/80 px-8 py-4 font-medium text-white transition-all duration-300 hover:from-purple-600 hover:to-blue-600"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.97 }}
+            >
+              <span className="absolute right-0 -mt-12 h-32 w-8 translate-x-12 rotate-12 transform bg-white opacity-10 transition-all duration-1000 ease-out group-hover:-translate-x-40"></span>
+              <span className="flex items-center">
+                View All Projects
+                <HiArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+              </span>
+            </motion.button>
+          </Link>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

@@ -49,51 +49,52 @@ const allProjects: Project[] = [
     featured: true,
     type: 'ai'
   },
+
   {
-    title: "CodeSync",
-    description: "Real-time collaborative code editor with syntax highlighting, video chat, and version control integration.",
-    image: "/codesync.png",
-    tags: ["Socket.io", "Express", "MongoDB", "WebRTC"],
-    github: "https://github.com/GlitchZap/codesync",
-    demo: "https://codesync-collab.vercel.app",
-    type: 'web'
-  },
-  {
-    title: "FitTrack",
-    description: "A fitness tracking mobile app that helps users monitor workouts, nutrition, and progress with personalized insights.",
-    image: "/fittrack.png",
-    tags: ["React Native", "Firebase", "Redux", "Expo"],
-    github: "https://github.com/GlitchZap/fittrack",
-    demo: "https://fittrack-app.demo",
-    type: 'mobile'
-  },
-  {
-    title: "SmartBudget",
-    description: "Personal finance application with expense tracking, budget planning, and visualization tools to help users manage their finances.",
-    image: "/smartbudget.png",
-    tags: ["Vue.js", "Firebase", "Chart.js", "PWA"],
-    github: "https://github.com/GlitchZap/smartbudget",
-    demo: "https://smart-budget.app",
-    type: 'web'
-  },
-  {
-    title: "NLP Summarizer",
-    description: "AI-powered text summarization tool that uses natural language processing to create concise summaries of long articles and documents.",
-    image: "/nlp-summarizer.png",
-    tags: ["Python", "NLTK", "FastAPI", "React"],
-    github: "https://github.com/GlitchZap/nlp-summarizer",
-    demo: "https://summarizer-ai.vercel.app",
+    title: "Treasure Hunt AI-Searching Techniques",
+    description: "Developed interactive treasure hunt visualization in React showcasing DFS, BFS, and A* algorithms. Implemented priority queue and graph traversal techniques with responsive step-by-step animation.",
+    image: "/project1.jpg",
+    tags: ["A* Algorithm", "DFS", "BFS", "React", "Data Structures"],
+    github: "https://github.com/GlitchZap/Treasure-Hunt-AISearchingTechniques",
+    demo: "https://treasure-hunt-ai-searching-techniques.vercel.app/",
+    featured: true,
     type: 'ai'
-  },
+  },  
+  
   {
-    title: "TaskFlow",
-    description: "Kanban-style task management application with real-time collaboration features for teams and individuals.",
-    image: "/taskflow.png",
-    tags: ["React", "Firebase", "DnD", "Material UI"],
-    github: "https://github.com/GlitchZap/taskflow",
-    demo: "https://taskflow-app.vercel.app",
+    title: "Dynamic Grid System",
+    description: "Built dynamic grid system with configurable parameters and real-time performance analytics dashboard. Leveraged React hooks for state management with Tailwind CSS for responsive design.",
+    image: "/project-placeholder.jpg",
+    tags: ["Analytic Dashboard", "Tailwind CSS", "Hooks", "React"],
+    github: "https://github.com/GlitchZap/",
+    demo: "https://github.com/GlitchZap/",
+    featured: true,
+    type: 'ai'
+  },  
+  
+  {
+    title: "Zombie Escape - 2D Survival Game",
+    description: "Developed a 2D grid-based zombie survival game featuring real-time pathfinding. Implemented the A* algorithm for intelligent zombie movement and player navigation. Designed dynamic difficulty scaling by adjusting grid size and obstacles for varied gameplay.",
+    image: "/project2.jpg",
+    tags: ["Real-time Interaction", "Game Development", "A* Algorithm", "React"],
+    github: "https://github.com/GlitchZap/DeadRun-ZombieEscapev2",
+    demo: "https://dead-run-zombie-escapev2.vercel.app/",
+    featured: true,
+    type: 'ai'
+  },  
+  
+  {
+    title: "Frontend Website Replications",
+    description: "Developed multiple responsive website clones, including a Netflix clone, using HTML, CSS, and @media queries for adaptability across different screen sizes. Implemented mobile-first design principles to ensure a seamless user experience on various devices.",
+    image: "/project4.jpg",
+    tags: ["Flexbox", "HTML", "Grid", "Responsive Design"],
+    github: "https://github.com/GlitchZap/",
+    demo: "https://github.com/GlitchZap/",
+    featured: true,
     type: 'web'
-  }
+  },
+
+  
 ];
 
 // Project Card with Lens Effect component

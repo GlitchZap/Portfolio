@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { motion, useAnimation, useInView } from "framer-motion";
+import React, { useEffect, useRef } from "react";
+import { motion, useAnimation, useInView, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
+import { AccentricityBackground } from "../ui/aceternity/Container";
 
 // Accentricity UI skill badge component
 const SkillBadge = ({ skill }: { skill: string }) => {
@@ -35,8 +36,17 @@ export default function AboutSection() {
 
   // Animation controls
   const controls = useAnimation();
-  const ref = React.useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const sectionRef = useRef(null);
+  const contentRef = React.useRef(null);
+  const isInView = useInView(contentRef, { once: true, amount: 0.3 });
+  
+  // Scroll-based animations
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+  
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   
   useEffect(() => {
     if (isInView) {
@@ -62,60 +72,13 @@ export default function AboutSection() {
   };
 
   return (
-    <section id="about" className="py-28 relative overflow-hidden">
-      {/* Enhanced Background with full width and subtle movement */}
-      <div className="absolute inset-0 w-full -z-10">
-        {/* Animated gradient blobs - positioned for full width */}
-        <div className="absolute -top-[30%] -left-[10%] w-[70%] h-[70%] bg-purple-600/10 rounded-full filter blur-[120px] animate-blob" />
-        <div className="absolute top-[30%] -right-[10%] w-[60%] h-[70%] bg-blue-600/10 rounded-full filter blur-[120px] animate-blob animation-delay-2000" />
-        <div className="absolute -bottom-[20%] left-[20%] w-[50%] h-[50%] bg-indigo-600/10 rounded-full filter blur-[120px] animate-blob animation-delay-4000" />
-        
-        {/* Geometric patterns - full width */}
-        <div className="absolute inset-0 w-screen bg-[linear-gradient(rgba(255,255,255,0.03)_1.5px,transparent_1.5px),linear-gradient(90deg,rgba(255,255,255,0.03)_1.5px,transparent_1.5px)] bg-[size:35px_35px]"></div>
-        
-        {/* Large circular rings - centered but expanded */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140vw] h-[140vh] border border-white/5 rounded-full opacity-40"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100vw] h-[100vh] border border-white/5 rounded-full opacity-40"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vh] border border-white/5 rounded-full opacity-40"></div>
-        
-        {/* Floating particles - spread across entire width */}
-        {Array.from({ length: 40 }).map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 rounded-full bg-white/20"
-            initial={{ 
-              x: Math.random() * 100 - 50 + '%',
-              y: Math.random() * 100 - 50 + '%',
-              opacity: Math.random() * 0.5 + 0.3,
-              scale: Math.random() * 1 + 0.5,
-            }}
-            animate={{ 
-              x: [
-                Math.random() * 120 - 60 + '%',
-                Math.random() * 120 - 60 + '%',
-                Math.random() * 120 - 60 + '%',
-              ],
-              y: [
-                Math.random() * 120 - 60 + '%',
-                Math.random() * 120 - 60 + '%',
-                Math.random() * 120 - 60 + '%',
-              ],
-            }}
-            transition={{ 
-              repeat: Infinity, 
-              duration: Math.random() * 20 + 20,
-              ease: "linear"
-            }}
-            style={{
-              left: Math.random() * 100 + '%',
-              top: Math.random() * 100 + '%',
-            }}
-          />
-        ))}
-        
-        {/* Noise texture overlay - full width */}
-        <div className="absolute inset-0 w-screen h-full bg-[url('/noise.png')] opacity-[0.03] mix-blend-overlay pointer-events-none" />
-      </div>
+    <section id="about" ref={sectionRef} className="py-28 relative overflow-hidden">
+      {/* Accentricity Background Component - Full Width */}
+      <AccentricityBackground 
+        variant="nebula"
+        intensity={0.5}
+        style={{ y: bgY } as React.CSSProperties}
+      />
       
       <div className="container mx-auto px-6 relative z-10">
         {/* Title - Centered with more space */}
@@ -137,7 +100,7 @@ export default function AboutSection() {
 
         {/* Centered Content with more spacing */}
         <motion.div
-          ref={ref}
+          ref={contentRef}
           initial="hidden"
           animate={controls}
           variants={containerVariants}
@@ -159,7 +122,7 @@ export default function AboutSection() {
                 >
                   <Image
                     src="/profile.jpg"
-                    alt="Aayush Patel"
+                    alt="Aayush Kumar"
                     fill
                     className="object-cover"
                   />
@@ -209,11 +172,11 @@ export default function AboutSection() {
               
               <motion.div variants={itemVariants}>
                 <a
-                  href="/resume.pdf"
+                  href="https://drive.google.com/file/d/1zfv3XfRi-CdlhuG73sj8AHyGrUGmeP1O/view?usp=sharing"
                   download
                   className="group relative inline-flex items-center justify-center px-8 py-4 overflow-hidden font-medium text-white transition duration-300 ease-out border-2 border-purple-500 rounded-full shadow-md"
                 >
-                  <span className="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-gradient-to-r from-purple-600 to-blue-600 group-hover:translate-x-0 ease">
+                                    <span className="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-gradient-to-r from-purple-600 to-blue-600 group-hover:translate-x-0 ease">
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"></path>
                     </svg>

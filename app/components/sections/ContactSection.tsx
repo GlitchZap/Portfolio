@@ -1,8 +1,10 @@
 "use client";
 
 import React, { useState, useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
-import { FaEnvelope, FaMapMarkerAlt, FaPhone, FaLinkedin, FaGithub, FaTwitter, FaPaperPlane } from 'react-icons/fa';
+import { motion, useInView, useScroll, useTransform } from 'framer-motion';
+import { FaEnvelope, FaMapMarkerAlt, FaPhone, FaLinkedin, FaGithub, FaTwitter, FaHeart, FaPaperPlane } from 'react-icons/fa';
+import { AccentricityBackground } from "../ui/aceternity/Container";
+import emailjs from 'emailjs-com';
 
 interface FormData {
   name: string;
@@ -21,8 +23,17 @@ export default function ContactSection() {
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState('');
   
+  const sectionRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(formRef, { once: true, amount: 0.3 });
+  
+  // Scroll-based animations
+  const { scrollYProgress } = useScroll({ 
+    target: sectionRef,
+    offset: ["start end", "end start"] 
+  });
+  
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   
   // Form hover state for dynamic effects
   const [hoveredField, setHoveredField] = useState<string | null>(null);
@@ -31,131 +42,55 @@ export default function ContactSection() {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
-  
+
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitError('');
-    
+
+    const serviceId = 'service_jc10tsf';
+    const templateId = 'template_yn9bqvf';
+    const userId = 'AWkjMPX6HuTGs1CI4';
+
     try {
-      // Simulate API call with timeout
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // Success state
-      setSubmitSuccess(true);
-      setFormData({ name: '', email: '', message: '' });
-      
-      // Reset success message after 5 seconds
-      setTimeout(() => {
-        setSubmitSuccess(false);
-      }, 5000);
-      
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (error) {
-      setSubmitError('There was an error sending your message. Please try again.');
+        await emailjs.send(serviceId, templateId, formData as unknown as Record<string, unknown>, userId);
+
+        setSubmitSuccess(true);
+        setFormData({ name: '', email: '', message: '' });
+
+        setTimeout(() => {
+            setSubmitSuccess(false);
+        }, 5000);
+    } catch {
+        setSubmitError('There was an error sending your message. Please try again.');
     } finally {
-      setIsSubmitting(false);
+        setIsSubmitting(false);
     }
-  };
+};
+  
 
   const contactInfo = [
-    { icon: <FaEnvelope />, label: 'Email', value: 'hello@aayushpatel.dev' },
-    { icon: <FaPhone />, label: 'Phone', value: '+1 (555) 123-4567' },
-    { icon: <FaMapMarkerAlt />, label: 'Location', value: 'San Francisco, CA' }
+    { icon: <FaEnvelope />, label: 'Email', value: 'aayushkripl@gmail.com' },
+    { icon: <FaPhone />, label: 'Phone', value: '+91 93118-26989' },
+    { icon: <FaMapMarkerAlt />, label: 'Location', value: 'New Delhi, India' }
   ];
 
   const socialLinks = [
     { icon: <FaGithub />, href: 'https://github.com/GlitchZap', label: 'GitHub' },
-    { icon: <FaLinkedin />, href: 'https://linkedin.com/in/GlitchZap', label: 'LinkedIn' },
-    { icon: <FaTwitter />, href: 'https://twitter.com/GlitchZap', label: 'Twitter' }
+    { icon: <FaLinkedin />, href: 'https://www.linkedin.com/in/aayush-kumar-30019728a/', label: 'LinkedIn' },
+    { icon: <FaTwitter />, href: 'https://x.com/AayushKumar666', label: 'Twitter' }
   ];
 
   return (
-    <section id="contact" className="py-32 relative overflow-hidden">
-            {/* Enhanced Background Elements - full width and more spacious */}
-            <div className="absolute inset-0 w-full h-full overflow-hidden -z-10">
-        {/* Animated large gradient shapes - positioned for full width */}
-        <motion.div 
-          className="absolute -top-[20%] -left-[10%] w-[80%] h-[80%] rounded-full bg-purple-600/8 filter blur-[150px]"
-          animate={{ 
-            x: [0, 50, 0],
-            y: [0, -60, 0],
-          }}
-          transition={{
-            repeat: Infinity,
-            duration: 25,
-            ease: "easeInOut"
-          }}
+    <section id="contact" ref={sectionRef} className="py-32 relative overflow-hidden">
+      {/* Accentricity Background Component - Full width */}
+      <motion.div style={{ y: bgY }}>
+        <AccentricityBackground 
+          variant="cosmos"
+          intensity={0.5}
         />
-        <motion.div 
-          className="absolute -bottom-[20%] -right-[10%] w-[80%] h-[80%] rounded-full bg-blue-600/8 filter blur-[150px]"
-          animate={{ 
-            x: [0, -40, 0],
-            y: [0, 60, 0],
-          }}
-          transition={{
-            repeat: Infinity,
-            duration: 20,
-            ease: "easeInOut",
-            delay: 2
-          }}
-        />
-        
-        {/* Hexagon pattern grid - full width */}
-        <div className="absolute inset-0 w-screen h-full" 
-          style={{
-            backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M30 0l30 17.32v34.64L30 60 0 51.96V17.32L30 0zm0 20l-20 11.5v23l20 11.5 20-11.5v-23L30 20zm0 2l18 10.4v20.8L30 53.6 12 43.2V32.4l18-10.4z\' fill=\'%23FFFFFF\' fill-opacity=\'0.02\'/%3E%3C/svg%3E")',
-            backgroundSize: '80px 80px'
-          }}
-        />
-        
-        {/* Grid lines - full width */}
-        <div className="absolute inset-0 w-screen h-full bg-[linear-gradient(rgba(255,255,255,0.03)_1.5px,transparent_1.5px),linear-gradient(90deg,rgba(255,255,255,0.03)_1.5px,transparent_1.5px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_30%,transparent_100%)]"></div>
-        
-        {/* Large circular rings - centered but expanded */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140vw] h-[140vh] border border-white/3 rounded-full opacity-30"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100vw] h-[100vh] border border-white/3 rounded-full opacity-30"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vh] border border-white/3 rounded-full opacity-30"></div>
-        
-        {/* Dynamic glow spots - spread out */}
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-500/5 rounded-full filter blur-[100px]"></div>
-        <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-blue-500/5 rounded-full filter blur-[100px]"></div>
-        
-        {/* Noise texture overlay - full width */}
-        <div className="absolute inset-0 w-screen h-full bg-[url('/noise.png')] opacity-[0.02] mix-blend-overlay pointer-events-none"></div>
-        
-        {/* Floating particles - spread across entire width */}
-        {Array.from({ length: 30 }).map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 rounded-full bg-white/20"
-            animate={{
-              x: [
-                Math.random() * 120 - 60 + '%',
-                Math.random() * 120 - 60 + '%',
-                Math.random() * 120 - 60 + '%',
-              ],
-              y: [
-                Math.random() * 120 - 60 + '%',
-                Math.random() * 120 - 60 + '%',
-                Math.random() * 120 - 60 + '%',
-              ],
-              opacity: [0, 1, 0],
-              scale: [0, Math.random() * 2 + 0.5, 0],
-            }}
-            transition={{
-              duration: Math.random() * 12 + 20,
-              repeat: Infinity,
-              ease: "linear",
-              delay: Math.random() * 5,
-            }}
-            style={{
-              left: Math.random() * 100 + '%',
-              top: Math.random() * 100 + '%',
-            }}
-          ></motion.div>
-        ))}
-      </div>
+      </motion.div>
       
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
@@ -368,8 +303,8 @@ export default function ContactSection() {
             </form>
           </motion.div>
           
-          {/* Right side - Contact Info and Map */}
-          <div className="space-y-10">
+                    {/* Right side - Contact Info and Map */}
+                    <div className="space-y-10">
             {/* Contact Information Card */}
             <motion.div 
               className="bg-gradient-to-br from-purple-900/20 via-black/60 to-blue-900/20 p-10 rounded-xl border border-white/10 backdrop-blur-md relative overflow-hidden"
@@ -505,7 +440,7 @@ export default function ContactSection() {
                   whileInView={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.5 }}
                 >
-                  San Francisco, CA
+                  New Delhi, India
                 </motion.div>
               </div>
               
@@ -515,11 +450,49 @@ export default function ContactSection() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
                 </span>
-                <span className="text-green-400 font-medium">Available for work in this location</span>
+                <span className="text-green-400 font-medium">Available for work!!</span>
               </div>
             </motion.div>
           </div>
         </div>
+        
+        {/* Copyright and Made With Footer */}
+        <motion.div 
+          className="mt-24 pt-10 border-t border-white/10 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          viewport={{ once: true }}
+        >
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            {/* Copyright */}
+            <div className="text-gray-400 text-sm">
+              © {new Date().getFullYear()} GlitchZap. All rights reserved.
+            </div>
+            
+            {/* Made With */}
+            <div className="flex items-center text-gray-400 text-sm">
+              <span>Made with</span>
+              <motion.span
+                className="mx-1 text-red-400"
+                animate={{ 
+                  scale: [1, 1.2, 1],
+                }}
+                transition={{ 
+                  repeat: Infinity, 
+                  duration: 1.5, 
+                  repeatType: "loop" 
+                }}
+              >
+                <FaHeart />
+              </motion.span>
+              <span>using</span>
+              <span className="ml-1 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400 font-medium">
+                Next.js, TypeScript & Tailwind CSS
+              </span>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
