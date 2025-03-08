@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-undef */
 "use client";
 
 import React, { useState, useRef } from 'react';
@@ -72,77 +71,114 @@ export default function ContactSection() {
   ];
 
   return (
-    <section id="contact" className="py-20 relative">
-      {/* Enhanced Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        {/* Animated gradient shapes */}
+    <section id="contact" className="py-32 relative overflow-hidden">
+            {/* Enhanced Background Elements - full width and more spacious */}
+            <div className="absolute inset-0 w-full h-full overflow-hidden -z-10">
+        {/* Animated large gradient shapes - positioned for full width */}
         <motion.div 
-          className="absolute top-10 left-10 w-64 h-64 rounded-full bg-purple-600/10 filter blur-3xl"
+          className="absolute -top-[20%] -left-[10%] w-[80%] h-[80%] rounded-full bg-purple-600/8 filter blur-[150px]"
           animate={{ 
-            x: [0, 30, 0],
-            y: [0, -40, 0],
+            x: [0, 50, 0],
+            y: [0, -60, 0],
           }}
           transition={{
             repeat: Infinity,
-            duration: 20,
+            duration: 25,
             ease: "easeInOut"
           }}
         />
         <motion.div 
-          className="absolute bottom-10 right-10 w-64 h-64 rounded-full bg-blue-600/10 filter blur-3xl"
+          className="absolute -bottom-[20%] -right-[10%] w-[80%] h-[80%] rounded-full bg-blue-600/8 filter blur-[150px]"
           animate={{ 
-            x: [0, -20, 0],
-            y: [0, 30, 0],
+            x: [0, -40, 0],
+            y: [0, 60, 0],
           }}
           transition={{
             repeat: Infinity,
-            duration: 15,
+            duration: 20,
             ease: "easeInOut",
             delay: 2
           }}
         />
         
-        {/* Hexagon pattern grid */}
-        <div className="absolute inset-0" 
+        {/* Hexagon pattern grid - full width */}
+        <div className="absolute inset-0 w-screen h-full" 
           style={{
             backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M30 0l30 17.32v34.64L30 60 0 51.96V17.32L30 0zm0 20l-20 11.5v23l20 11.5 20-11.5v-23L30 20zm0 2l18 10.4v20.8L30 53.6 12 43.2V32.4l18-10.4z\' fill=\'%23FFFFFF\' fill-opacity=\'0.02\'/%3E%3C/svg%3E")',
-            backgroundSize: '60px 60px'
+            backgroundSize: '80px 80px'
           }}
         />
         
-        {/* Grid lines */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_70%_70%_at_50%_50%,#000_20%,transparent_100%)]"></div>
+        {/* Grid lines - full width */}
+        <div className="absolute inset-0 w-screen h-full bg-[linear-gradient(rgba(255,255,255,0.03)_1.5px,transparent_1.5px),linear-gradient(90deg,rgba(255,255,255,0.03)_1.5px,transparent_1.5px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_30%,transparent_100%)]"></div>
         
-        {/* Dynamic glow spots */}
-        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-purple-500/10 rounded-full filter blur-xl"></div>
-        <div className="absolute bottom-1/3 right-1/4 w-40 h-40 bg-blue-500/10 rounded-full filter blur-xl"></div>
+        {/* Large circular rings - centered but expanded */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140vw] h-[140vh] border border-white/3 rounded-full opacity-30"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100vw] h-[100vh] border border-white/3 rounded-full opacity-30"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vh] border border-white/3 rounded-full opacity-30"></div>
         
-        {/* Noise texture overlay */}
-        <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.03] mix-blend-overlay pointer-events-none"></div>
+        {/* Dynamic glow spots - spread out */}
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-500/5 rounded-full filter blur-[100px]"></div>
+        <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-blue-500/5 rounded-full filter blur-[100px]"></div>
+        
+        {/* Noise texture overlay - full width */}
+        <div className="absolute inset-0 w-screen h-full bg-[url('/noise.png')] opacity-[0.02] mix-blend-overlay pointer-events-none"></div>
+        
+        {/* Floating particles - spread across entire width */}
+        {Array.from({ length: 30 }).map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 rounded-full bg-white/20"
+            animate={{
+              x: [
+                Math.random() * 120 - 60 + '%',
+                Math.random() * 120 - 60 + '%',
+                Math.random() * 120 - 60 + '%',
+              ],
+              y: [
+                Math.random() * 120 - 60 + '%',
+                Math.random() * 120 - 60 + '%',
+                Math.random() * 120 - 60 + '%',
+              ],
+              opacity: [0, 1, 0],
+              scale: [0, Math.random() * 2 + 0.5, 0],
+            }}
+            transition={{
+              duration: Math.random() * 12 + 20,
+              repeat: Infinity,
+              ease: "linear",
+              delay: Math.random() * 5,
+            }}
+            style={{
+              left: Math.random() * 100 + '%',
+              top: Math.random() * 100 + '%',
+            }}
+          ></motion.div>
+        ))}
       </div>
       
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-24"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
+          <h2 className="text-3xl md:text-5xl font-bold mb-8 text-white">
             Get in <span className="text-gradient bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-blue-500">Touch</span>
           </h2>
-          <p className="max-w-2xl mx-auto text-gray-400">
+          <p className="max-w-2xl mx-auto text-gray-400 text-lg">
             I am currently available for freelance work or full-time positions. 
             Feel free to reach out if you have a project in mind or just want to connect!
           </p>
         </motion.div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 max-w-6xl mx-auto">
           {/* Left side - Contact Form */}
           <motion.div 
             ref={formRef}
-            className="bg-gradient-to-br from-purple-900/20 via-black/80 to-blue-900/20 p-8 rounded-xl border border-white/10 backdrop-blur-md relative overflow-hidden"
+            className="bg-gradient-to-br from-purple-900/20 via-black/60 to-blue-900/20 p-10 rounded-xl border border-white/10 backdrop-blur-md relative overflow-hidden"
             initial={{ opacity: 0, x: -50 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, type: 'spring' }}
@@ -161,11 +197,11 @@ export default function ContactSection() {
               }}
             />
             
-            <h3 className="text-2xl font-bold mb-8 text-white flex items-center">
+            <h3 className="text-2xl font-bold mb-10 text-white flex items-center">
               <FaPaperPlane className="mr-3 text-purple-400" /> Send a Message
             </h3>
             
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-8">
               {/* Name field - improved design */}
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">Name</label>
@@ -301,8 +337,8 @@ export default function ContactSection() {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                                    {/* Button background */}
-                                    <span className="absolute inset-0 w-full h-full bg-gradient-to-br from-purple-600 to-blue-600"></span>
+                  {/* Button background */}
+                  <span className="absolute inset-0 w-full h-full bg-gradient-to-br from-purple-600 to-blue-600"></span>
                   <span className="absolute bottom-0 right-0 block w-64 h-64 mb-32 mr-4 transition-all duration-500 origin-bottom-left transform rotate-45 translate-x-24 bg-pink-500 opacity-30 group-hover:rotate-90 ease"></span>
                   <span className="relative flex items-center justify-center gap-2">
                     {isSubmitting ? (
@@ -333,10 +369,10 @@ export default function ContactSection() {
           </motion.div>
           
           {/* Right side - Contact Info and Map */}
-          <div className="space-y-8">
+          <div className="space-y-10">
             {/* Contact Information Card */}
             <motion.div 
-              className="bg-gradient-to-br from-purple-900/20 via-black/80 to-blue-900/20 p-8 rounded-xl border border-white/10 backdrop-blur-md relative overflow-hidden"
+              className="bg-gradient-to-br from-purple-900/20 via-black/60 to-blue-900/20 p-10 rounded-xl border border-white/10 backdrop-blur-md relative overflow-hidden"
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, type: 'spring' }}
@@ -357,9 +393,9 @@ export default function ContactSection() {
                 }}
               />
               
-              <h3 className="text-2xl font-bold mb-8 text-white">Let us Connect</h3>
+              <h3 className="text-2xl font-bold mb-10 text-white">Lets Connect</h3>
               
-              <div className="space-y-6">
+              <div className="space-y-8">
                 {contactInfo.map((item, index) => (
                   <motion.div 
                     key={index}
@@ -370,7 +406,7 @@ export default function ContactSection() {
                     viewport={{ once: true }}
                   >
                     <motion.div 
-                      className="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-purple-600/30 to-blue-600/30 border border-purple-500/30"
+                      className="flex-shrink-0 w-14 h-14 flex items-center justify-center rounded-full bg-gradient-to-br from-purple-600/30 to-blue-600/30 border border-purple-500/30"
                       whileHover={{ scale: 1.1, rotate: 5 }}
                       whileTap={{ scale: 0.95 }}
                     >
@@ -378,23 +414,23 @@ export default function ContactSection() {
                     </motion.div>
                     <div>
                       <div className="text-sm text-gray-400 mb-1">{item.label}</div>
-                      <div className="font-medium text-white">{item.value}</div>
+                      <div className="font-medium text-white text-lg">{item.value}</div>
                     </div>
                   </motion.div>
                 ))}
               </div>
               
               {/* Social Links */}
-              <div className="mt-10 pt-8 border-t border-white/10">
-                <h4 className="text-lg font-semibold mb-5 text-white">Find me online</h4>
-                <div className="flex flex-wrap gap-3">
+              <div className="mt-12 pt-8 border-t border-white/10">
+                <h4 className="text-lg font-semibold mb-6 text-white">Find me online</h4>
+                <div className="flex flex-wrap gap-4">
                   {socialLinks.map((social, index) => (
                     <motion.a 
                       key={index}
                       href={social.href}
                       target="_blank" 
                       rel="noreferrer"
-                      className="flex items-center justify-center w-12 h-12 rounded-full border border-white/10 text-gray-300 hover:text-purple-400 hover:border-purple-400/50 transition-all duration-300"
+                      className="flex items-center justify-center w-14 h-14 rounded-full border border-white/10 text-gray-300 hover:text-purple-400 hover:border-purple-400/50 transition-all duration-300"
                       whileHover={{ 
                         scale: 1.1, 
                         boxShadow: '0 0 20px 2px rgba(168, 85, 247, 0.3)',
@@ -411,19 +447,19 @@ export default function ContactSection() {
             
             {/* Location Card with enhanced map */}
             <motion.div 
-              className="bg-gradient-to-br from-purple-900/20 via-black/80 to-blue-900/20 p-8 rounded-xl border border-white/10 backdrop-blur-md relative overflow-hidden"
+              className="bg-gradient-to-br from-purple-900/20 via-black/60 to-blue-900/20 p-10 rounded-xl border border-white/10 backdrop-blur-md relative overflow-hidden"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, type: 'spring', delay: 0.3 }}
               viewport={{ once: true }}
             >
-              <h3 className="text-2xl font-bold mb-6 text-white">Location</h3>
-              <div className="aspect-[16/9] rounded-lg overflow-hidden border border-white/10 relative">
+              <h3 className="text-2xl font-bold mb-8 text-white">Location</h3>
+              <div className="aspect-video rounded-lg overflow-hidden border border-white/10 relative">
                 {/* Fake map with animated elements */}
                 <div className="absolute inset-0 bg-[url('/map.png')] bg-cover bg-center opacity-70"></div>
                 
                 {/* Map overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent"></div>
                 
                 {/* City grid lines */}
                 <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:20px_20px]"></div>
@@ -444,7 +480,7 @@ export default function ContactSection() {
                     {/* Animated pulsing circles */}
                     <div className="absolute -inset-1">
                       <motion.div
-                        className="w-10 h-10 rounded-full bg-purple-500/20"
+                        className="w-14 h-14 rounded-full bg-purple-500/20"
                         animate={{ 
                           scale: [1, 2.5, 1],
                           opacity: [0.4, 0, 0.4]
@@ -458,13 +494,13 @@ export default function ContactSection() {
                     </div>
                     
                     {/* Location dot */}
-                    <div className="w-6 h-6 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 border-2 border-white shadow-lg shadow-purple-500/30"></div>
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 border-2 border-white shadow-lg shadow-purple-500/30"></div>
                   </motion.div>
                 </div>
                 
                 {/* Location label */}
                 <motion.div
-                  className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/80 backdrop-blur-sm px-4 py-2 rounded-full border border-white/10 text-white text-sm font-medium"
+                  className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-black/80 backdrop-blur-sm px-6 py-3 rounded-full border border-white/10 text-white text-base font-medium"
                   initial={{ y: 20, opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.5 }}
@@ -474,8 +510,8 @@ export default function ContactSection() {
               </div>
               
               {/* Available status */}
-              <div className="flex items-center mt-6">
-                <span className="relative flex h-3 w-3 mr-2">
+              <div className="flex items-center mt-8">
+                <span className="relative flex h-3 w-3 mr-3">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
                 </span>
