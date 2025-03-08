@@ -159,9 +159,9 @@ export default function AboutSection() {
               
               <motion.div variants={itemVariants} className="mb-16 px-6">
                 <p className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
-                  I am a full-stack developer with over 5 years of experience building modern web applications. 
+                  I am a full-stack developer and a student building modern web applications. 
                   My expertise spans across front-end development with React and Next.js, back-end solutions 
-                  with Node.js, and database management with MongoDB and PostgreSQL.
+                  with Node.js,Flask and database management with MongoDB, Firebase and MySQL.
                 </p>
                 <p className="text-gray-300 text-lg mb-10 max-w-2xl mx-auto">
                   I am passionate about creating clean, efficient code and designing intuitive user interfaces.
