@@ -7,15 +7,15 @@ import { AccentricityBackground } from "../ui/aceternity/Container";
 import emailjs from 'emailjs-com';
 
 interface FormData {
-  name: string;
-  email: string;
+  from_name: string;
+  from_email: string;
   message: string;
 }
 
 export default function ContactSection() {
   const [formData, setFormData] = useState<FormData>({
-    name: '',
-    email: '',
+    from_name: '',
+    from_email: '',
     message: ''
   });
   
@@ -57,7 +57,7 @@ export default function ContactSection() {
         await emailjs.send(serviceId, templateId, formData as unknown as Record<string, unknown>, userId);
 
         setSubmitSuccess(true);
-        setFormData({ name: '', email: '', message: '' });
+        setFormData({ from_name: '', from_email: '', message: '' });
 
         setTimeout(() => {
             setSubmitSuccess(false);
@@ -139,31 +139,30 @@ export default function ContactSection() {
             <form onSubmit={handleSubmit} className="space-y-8">
               {/* Name field - improved design */}
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">Name</label>
+                <label htmlFor="from_name" className="block text-sm font-medium text-gray-300 mb-2">Name</label>
                 <motion.div 
                   className="relative"
-                  onMouseEnter={() => setHoveredField('name')}
+                  onMouseEnter={() => setHoveredField('from_name')}
                   onMouseLeave={() => setHoveredField(null)}
                   whileHover={{ scale: 1.01 }}
                   whileTap={{ scale: 0.99 }}
                 >
                   <input
                     type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
+                    id="from_name"
+                    name="from_name"
+                    value={formData.from_name}
                     onChange={handleChange}
                     required
                     className="w-full px-6 py-4 bg-black/30 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent text-white placeholder-gray-500"
                     placeholder="Your name"
                   />
-                  
                   {/* Subtle glow effect on hover/focus */}
                   <motion.div 
                     className="absolute inset-0 -z-10 rounded-lg opacity-0 pointer-events-none"
                     animate={{ 
-                      opacity: hoveredField === 'name' || document.activeElement?.id === 'name' ? 0.2 : 0,
-                      boxShadow: hoveredField === 'name' || document.activeElement?.id === 'name' 
+                      opacity: hoveredField === 'from_name' || document.activeElement?.id === 'from_name' ? 0.2 : 0,
+                      boxShadow: hoveredField === 'from_name' || document.activeElement?.id === 'from_name' 
                         ? '0 0 20px 5px rgba(168, 85, 247, 0.3)' 
                         : '0 0 0px 0px rgba(168, 85, 247, 0)',
                     }}
@@ -174,31 +173,30 @@ export default function ContactSection() {
               
               {/* Email field */}
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">Email</label>
+                <label htmlFor="from_email" className="block text-sm font-medium text-gray-300 mb-2">Email</label>
                 <motion.div 
                   className="relative"
-                  onMouseEnter={() => setHoveredField('email')}
+                  onMouseEnter={() => setHoveredField('from_email')}
                   onMouseLeave={() => setHoveredField(null)}
                   whileHover={{ scale: 1.01 }}
                   whileTap={{ scale: 0.99 }}
                 >
                   <input
                     type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
+                    id="from_email"
+                    name="from_email"
+                    value={formData.from_email}
                     onChange={handleChange}
                     required
                     className="w-full px-6 py-4 bg-black/30 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent text-white placeholder-gray-500"
                     placeholder="your.email@example.com"
                   />
-                  
                   {/* Subtle glow effect on hover/focus */}
                   <motion.div 
                     className="absolute inset-0 -z-10 rounded-lg opacity-0 pointer-events-none"
                     animate={{ 
-                      opacity: hoveredField === 'email' || document.activeElement?.id === 'email' ? 0.2 : 0,
-                      boxShadow: hoveredField === 'email' || document.activeElement?.id === 'email' 
+                      opacity: hoveredField === 'from_email' || document.activeElement?.id === 'from_email' ? 0.2 : 0,
+                      boxShadow: hoveredField === 'from_email' || document.activeElement?.id === 'from_email' 
                         ? '0 0 20px 5px rgba(168, 85, 247, 0.3)' 
                         : '0 0 0px 0px rgba(168, 85, 247, 0)',
                     }}
@@ -227,7 +225,6 @@ export default function ContactSection() {
                     className="w-full px-6 py-4 bg-black/30 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent text-white resize-none placeholder-gray-500"
                     placeholder="Your message..."
                   ></textarea>
-                  
                   {/* Subtle glow effect on hover/focus */}
                   <motion.div 
                     className="absolute inset-0 -z-10 rounded-lg opacity-0 pointer-events-none"
