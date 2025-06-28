@@ -205,7 +205,7 @@ export default function HomeSection() {
   const typingTexts = [
     "UI/UX Designer",
     "Frontend Expert",
-    "Tech Enthusiast",
+    "Your friendly neighbourhood Tech Enthusiast",
     "Learning Full Stack Developing"
   ];
   
