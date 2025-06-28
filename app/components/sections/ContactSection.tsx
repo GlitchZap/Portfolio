@@ -50,11 +50,15 @@ export default function ContactSection() {
     setSubmitError('');
 
     const serviceId = 'service_jc10tsf';
-    const templateId = 'template_yn9bqvf';
+    const ownerTemplateId = 'template_yn9bqvf'; // Your notification template
+    const confirmationTemplateId = 'template_2xymcr8'; // Create this in EmailJS
     const userId = 'AWkjMPX6HuTGs1CI4';
 
     try {
-        await emailjs.send(serviceId, templateId, formData as unknown as Record<string, unknown>, userId);
+        // Send to you
+        await emailjs.send(serviceId, ownerTemplateId, formData as unknown as Record<string, unknown>, userId);
+        // Send confirmation to sender
+        await emailjs.send(serviceId, confirmationTemplateId, formData as unknown as Record<string, unknown>, userId);
 
         setSubmitSuccess(true);
         setFormData({ from_name: '', from_email: '', message: '' });
