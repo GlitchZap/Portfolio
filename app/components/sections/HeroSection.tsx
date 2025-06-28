@@ -203,10 +203,10 @@ export default function HomeSection() {
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   
   const typingTexts = [
-    "Full Stack Developer",
     "UI/UX Designer",
-    "Web Application Expert",
-    "Tech Enthusiast"
+    "Frontend Expert",
+    "Tech Enthusiast",
+    "Learning Full Stack Developing"
   ];
   
   useEffect(() => {
