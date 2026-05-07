@@ -206,7 +206,8 @@ export default function HomeSection() {
     "UI/UX Designer",
     "Frontend Expert",
     "Your friendly neighbourhood Tech Enthusiast",
-    "Learning Full Stack Developing"
+    "Full Stack Developer",
+    "App Developer",
   ];
   
   useEffect(() => {
