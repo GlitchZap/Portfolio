@@ -9,22 +9,22 @@ const SkillsSection = () => {
   const skillCategories = [
     {
       title: "Programming Languages",
-      content: "C++, C, Java, JavaScript, Python, HTML, CSS",
+      content: "C++, C, JavaScript, Python, Swift, HTML, CSS",
       icon: <FaCode />
     },
     {
       title: "Frontend",
-      content: "React.js, TailwindCSS, HTML5, CSS3, JavaScript",
+      content: "React.js, TailwindCSS, HTML5, CSS3, UIKit, SwiftUI",
       icon: <FaDesktop />
     },
     {
       title: "Backend & Database",
-      content: "MySQL, Flask, Firebase, FastAPI, TensorFlow",
+      content: "MySQL, Flask, Firebase, Supabase, FastAPI, TensorFlow",
       icon: <FaServer />
     },
     {
       title: "Tools & Platforms",
-      content: "VSCode, PyCharm, Git, GitHub, Figma, Eclipse, IntelliJ",
+      content: "VSCode, PyCharm, Git, GitHub, Figma, Eclipse, XCode, IntelliJ",
       icon: <FaTools />
     },
     {
@@ -103,6 +103,12 @@ const SkillsSection = () => {
             </span>
             <span className="bg-indigo-900/30 border border-indigo-500/20 text-indigo-300 px-4 py-2 rounded-lg">
               AWS Graduate - Cloud Foundation and Data Engineering
+            </span>
+            <span className="bg-indigo-900/30 border border-indigo-500/20 text-indigo-300 px-4 py-2 rounded-lg">
+              SAP Certified - Data Analyst - SAP Analytics Cloud
+            </span>
+            <span className="bg-green-900/30 border border-green-500/20 text-green-300 px-4 py-2 rounded-lg">
+             GitHub Foundations
             </span>
           </div>
         </motion.div>

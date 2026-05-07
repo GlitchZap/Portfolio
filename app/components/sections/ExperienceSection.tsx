@@ -1,9 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
-import { motion, useScroll, useTransform, useSpring, useInView, useMotionTemplate } from "framer-motion";
 import { HiCalendar, HiLocationMarker, HiAcademicCap, HiBriefcase } from "react-icons/hi";
-import { AccentricityBackground } from "../ui/aceternity/Container";
 
 // Interface for timeline data
 interface TimelineItem {
@@ -19,20 +17,19 @@ interface TimelineItem {
 
 // Timeline data - Updated with your experience and education
 const timelineData: TimelineItem[] = [
-    {
-        id: 6,
-        title: "High School Education",
-        organization: "Gyan Mandir Public School",
-        date: "April 2007 - March 2023",
-        location: "School",
-        description: [
-          "10th Grades: 89%",
-          "12th Grades: 76%",
-          "Participated in various extracurricular activities"
-        ],
-        type: "education"
-      },
-
+  {
+    id: 6,
+    title: "High School Education",
+    organization: "Gyan Mandir Public School",
+    date: "April 2007 - March 2023",
+    location: "School",
+    description: [
+      "10th Grades: 89%",
+      "12th Grades: 76%",
+      "Participated in various extracurricular activities"
+    ],
+    type: "education"
+  },
   {
     id: 5,
     title: "B.Tech in Computer Science and Engineering",
@@ -91,7 +88,6 @@ const timelineData: TimelineItem[] = [
     type: "experience",
     technologies: ["Product Design", "UX Design", "UI/UX"]
   },
-
   {
     id: 1,
     title: "Electronic Arts Software Engineering",
@@ -105,51 +101,66 @@ const timelineData: TimelineItem[] = [
     ],
     type: "experience",
     technologies: ["C++", "Object-Oriented Design", "Game Development"]
+  },
+  {
+    id: 7,
+    title: "Frontend Developer Intern",
+    organization: "Navdeep Shipping & Container Yard",
+    date: "May 2025 – Jul 2025",
+    location: "Remote",
+    description: [
+      "Developed and deployed a production-grade company website using React, TypeScript, and TailwindCSS (mega-marinect.in).",
+      "Built responsive UI components and optimized performance for seamless experience across devices.",
+      "Implemented modern UI/UX with animations using Framer Motion, improving user engagement.",
+      "Collaborated on real-world requirements and delivered features in a paid internship (10K/month)."
+    ],
+    type: "experience",
+    technologies: ["React", "TypeScript", "TailwindCSS", "Framer Motion"]
+  },
+  {
+    id: 8,
+    title: "iOS Student Developer Program",
+    organization: "SRM × Apple × Infosys",
+    date: "Jul 2025 – Present",
+    location: "Remote",
+    description: [
+      "Built reusable components using Swift, improving development efficiency.",
+      "Optimized debugging and version control workflows using Git.",
+      "Delivered features through iterative Agile sprint cycles"
+    ],
+    type: "education",
+    technologies: ["iOS", "Swift", "Git", "Agile"]
+  },
+  {
+    id: 9,
+    title: "iOS Developer Intern",
+    organization: "Infosys",
+    date: "Mar 2026",
+    location: "Mysore",
+    description: [
+      "Delivered modular features integrating REST APIs, reducing integration time by ∼25%.",
+      "Led Agile (SCRUM) execution as Scrum Master for a 5+ member team, improving sprint efficiency.",
+      "Translated product requirements into scalable technical solutions with focus on performance.",
+      "Streamlined backend-aligned workflows, reducing inconsistencies in API interactions."
+    ],
+    type: "experience",
+    technologies: ["iOS", "Swift", "REST APIs", "Agile", "SCRUM"]
   }
-
-
-
 ];
 
-// Timeline item component with enhanced animations
+// Timeline item component (Animations removed)
 const TimelineItem = ({ item, index }: { item: TimelineItem, index: number }) => {
-  const itemRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(itemRef, { once: false, amount: 0.2, margin: "-100px 0px -100px 0px" });
-  
-  // Make cards enter from alternating sides
-  const entryDirection = index % 2 === 0 ? -50 : 50;
-  
   return (
-    <motion.div 
-      ref={itemRef}
-      initial={{ opacity: 0, x: entryDirection, scale: 0.95 }}
-      animate={isInView ? { opacity: 1, x: 0, scale: 1 } : { opacity: 0.3, x: entryDirection / 2, scale: 0.95 }}
-      transition={{ 
-        type: "spring", 
-        stiffness: 40,
-        damping: 15, 
-        mass: 0.5, 
-        delay: index * 0.05
-      }}
-      className="relative mb-12"
-    >
+    <div className="relative mb-12">
       {/* Timeline connector */}
       <div className="absolute left-5 top-7 transform -translate-x-1/2 h-full w-0.5">
-        <motion.div 
-          className="h-full bg-gradient-to-b from-purple-500 to-blue-500 w-full rounded-full"
-          initial={{ scaleY: 0, originY: 0 }}
-          animate={isInView ? { scaleY: 1 } : { scaleY: 0 }}
-          transition={{ delay: 0.3, duration: 0.6, ease: "easeOut" }}
-        />
+        <div className="h-full bg-gradient-to-b from-purple-500 to-blue-500 w-full rounded-full" />
       </div>
       
       <div className="flex gap-8">
         {/* Timeline icon */}
-        <motion.div 
+        <div 
           className="relative z-10 flex-shrink-0 w-10 h-10 rounded-full border-2 border-purple-500 bg-black flex items-center justify-center shadow-lg shadow-purple-500/20"
-          initial={{ scale: 0 }}
-          animate={isInView ? { scale: 1 } : { scale: 0 }}
-          transition={{ type: "spring", stiffness: 150, delay: 0.1 }}
           style={{
             background: "linear-gradient(45deg, rgba(168, 85, 247, 0.2), rgba(59, 130, 246, 0.2))"
           }}
@@ -159,13 +170,10 @@ const TimelineItem = ({ item, index }: { item: TimelineItem, index: number }) =>
           ) : (
             <HiAcademicCap className="text-blue-500 text-lg" />
           )}
-        </motion.div>
+        </div>
         
         {/* Content card */}
-        <motion.div 
-          className="flex-1 bg-gradient-to-br from-purple-900/20 via-black/60 to-blue-900/20 rounded-xl border border-white/10 backdrop-blur-md overflow-hidden shadow-lg shadow-purple-900/5"
-          whileHover={{ y: -5, boxShadow: "0 20px 40px -15px rgba(139, 92, 246, 0.15)" }}
-        >
+        <div className="flex-1 bg-gradient-to-br from-purple-900/20 via-black/60 to-blue-900/20 rounded-xl border border-white/10 backdrop-blur-md overflow-hidden shadow-lg shadow-purple-900/5 transition-transform hover:-translate-y-1 hover:shadow-xl hover:shadow-purple-500/10">
           {/* Card content */}
           <div className="p-6">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
@@ -174,14 +182,9 @@ const TimelineItem = ({ item, index }: { item: TimelineItem, index: number }) =>
                 <p className="text-purple-400 font-medium">{item.organization}</p>
               </div>
               
-              <motion.div 
-                className="mt-2 md:mt-0 px-3 py-1 rounded-full bg-purple-900/30 border border-purple-500/30 text-purple-300 text-sm flex items-center justify-center whitespace-nowrap"
-                initial={{ opacity: 0, x: 20 }}
-                animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
-                transition={{ delay: 0.4 }}
-              >
+              <div className="mt-2 md:mt-0 px-3 py-1 rounded-full bg-purple-900/30 border border-purple-500/30 text-purple-300 text-sm flex items-center justify-center whitespace-nowrap">
                 <HiCalendar className="mr-1" /> {item.date}
-              </motion.div>
+              </div>
             </div>
             
             <div className="flex items-center mb-4 text-gray-400 text-sm">
@@ -190,16 +193,10 @@ const TimelineItem = ({ item, index }: { item: TimelineItem, index: number }) =>
             
             <div className="space-y-2 mb-4">
               {item.description.map((desc, i) => (
-                <motion.div 
-                  key={i} 
-                  className="flex items-start text-gray-300"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-                  transition={{ delay: 0.3 + (i * 0.1) }}
-                >
+                <div key={i} className="flex items-start text-gray-300">
                   <span className="mr-2 mt-1.5 flex-shrink-0 h-1.5 w-1.5 rounded-full bg-purple-500" />
                   <span>{desc}</span>
-                </motion.div>
+                </div>
               ))}
             </div>
             
@@ -207,66 +204,28 @@ const TimelineItem = ({ item, index }: { item: TimelineItem, index: number }) =>
             {item.technologies && (
               <div className="flex flex-wrap gap-2 mt-4">
                 {item.technologies.map((tech, i) => (
-                  <motion.span
+                  <span
                     key={i}
                     className="px-2 py-1 text-xs rounded-md border border-blue-500/20 bg-blue-900/20 text-blue-300"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-                    transition={{ delay: 0.4 + (i * 0.05) }}
                   >
                     {tech}
-                  </motion.span>
+                  </span>
                 ))}
               </div>
             )}
           </div>
-        </motion.div>
+        </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
 export default function ExperienceEducationSection() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const timelineRef = useRef<HTMLDivElement>(null);
-  
-  // Scroll animations
-  const { scrollYProgress } = useScroll({ 
-    target: sectionRef,
-    offset: ["start end", "end start"] 
-  });
-  
-  // Make scroll progress smoother with spring physics
-  const smoothProgress = useSpring(scrollYProgress, { 
-    stiffness: 100, 
-    damping: 30, 
-    restDelta: 0.001 
-  });
-  
-  // Transform values for background and header parallax effects
-  const bgY = useTransform(smoothProgress, [0, 1], ["0%", "30%"]);
-  const bgYString = useMotionTemplate`${bgY}`;
-  const titleY = useTransform(smoothProgress, [0, 0.3], ["0%", "-20%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.2], [0, 1]);
-
   return (
-    <section id="experience" ref={sectionRef} className="py-32 relative overflow-hidden">
-      {/* Accentricity Background for consistent look */}
-      <AccentricityBackground 
-        variant="grid"
-        intensity={0.5}
-        style={{ y: bgYString.get() }}
-      />
-      
+    <section id="experience" className="py-32 relative overflow-hidden bg-black">
       <div className="container mx-auto px-6 relative z-10">
-        {/* Animated section header */}
-        <motion.div 
-          className="text-center mb-20"
-          style={{ 
-            opacity,
-            y: titleY
-          }}
-        >
+        {/* Static section header */}
+        <div className="text-center mb-20">
           <h2 className="text-3xl md:text-5xl font-bold mb-8 text-white">
             Experience & <span className="text-gradient bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-blue-500">Education</span>
           </h2>
@@ -274,40 +233,28 @@ export default function ExperienceEducationSection() {
             My professional journey and academic background that have shaped my expertise in web development
             and design, with a focus on creating exceptional user experiences.
           </p>
-        </motion.div>
+        </div>
 
         {/* Floating markers indicating experience vs education */}
         <div className="flex justify-center gap-8 mb-16">
-          <motion.div 
-            className="flex items-center gap-2"
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            viewport={{ once: true }}
-          >
+          <div className="flex items-center gap-2">
             <div className="w-4 h-4 rounded-full bg-purple-500/30 border border-purple-500 flex items-center justify-center">
               <HiBriefcase className="text-purple-500 text-xs" />
             </div>
             <span className="text-purple-400">Experience</span>
-          </motion.div>
+          </div>
           
-          <motion.div 
-            className="flex items-center gap-2"
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            viewport={{ once: true }}
-          >
+          <div className="flex items-center gap-2">
             <div className="w-4 h-4 rounded-full bg-blue-500/30 border border-blue-500 flex items-center justify-center">
               <HiAcademicCap className="text-blue-500 text-xs" />
             </div>
             <span className="text-blue-400">Education</span>
-          </motion.div>
+          </div>
         </div>
         
         {/* Timeline container with enhanced spacing */}
-        <div className="max-w-4xl mx-auto pl-7 md:pl-0" ref={timelineRef}>
-          {/* Timeline items with staggered animations */}
+        <div className="max-w-4xl mx-auto pl-7 md:pl-0">
+          {/* Timeline items */}
           <div>
             {timelineData.map((item, index) => (
               <TimelineItem key={item.id} item={item} index={index} />
@@ -315,22 +262,11 @@ export default function ExperienceEducationSection() {
           </div>
           
           {/* Bottom indicator */}
-          <motion.div 
-            className="w-16 h-16 mx-auto mt-12 rounded-full bg-gradient-to-br from-purple-500/20 to-blue-500/20 border border-purple-500/30 flex items-center justify-center"
-            initial={{ opacity: 0, scale: 0 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ 
-              type: "spring",
-              stiffness: 100,
-              delay: 0.5
-            }}
-            viewport={{ once: true, margin: "-100px" }}
-          >
-                       <span className="text-gradient bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-blue-500 font-bold">Now</span>
-          </motion.div>
+          <div className="w-16 h-16 mx-auto mt-12 rounded-full bg-gradient-to-br from-purple-500/20 to-blue-500/20 border border-purple-500/30 flex items-center justify-center">
+            <span className="text-gradient bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-blue-500 font-bold">Now</span>
+          </div>
         </div>
       </div>
     </section>
   );
 }
-          

@@ -108,7 +108,7 @@ export default function ContactSection() {
             Get in <span className="text-gradient bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-blue-500">Touch</span>
           </h2>
           <p className="max-w-2xl mx-auto text-gray-400 text-lg">
-            I am currently available for freelance work or full-time positions. 
+            I am currently available for freelance work / intern or full-time positions. 
             Feel free to reach out if you have a project in mind or just want to connect!
           </p>
         </motion.div>

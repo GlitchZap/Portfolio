@@ -4,6 +4,13 @@ import React, { useEffect, useRef } from "react";
 import { motion, useAnimation, useInView, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import { AccentricityBackground } from "../ui/aceternity/Container";
+import LogoLoop from "../../../components/LogoLoop";
+import { 
+  SiReact, SiNextdotjs, SiTypescript, SiNodedotjs, SiMongodb, 
+  SiTailwindcss, SiGraphql, SiFramer, SiFigma, SiSwift, 
+  SiMysql, SiSupabase, SiFirebase, SiApple
+} from 'react-icons/si';
+import { TbApi } from 'react-icons/tb';
 
 // Accentricity UI skill badge component
 const SkillBadge = ({ skill }: { skill: string }) => {
@@ -29,9 +36,27 @@ export default function AboutSection() {
   // Skills data
   const skills = [
     "React", "Next.js", "TypeScript", 
-    "Node.js", "Express", "MongoDB", 
-    "TailwindCSS", "GraphQL", "AWS", 
-    "Framer Motion", "UI/UX Design", "RESTful APIs"
+    "Node.js", "MongoDB", 
+    "TailwindCSS", "GraphQL", 
+    "Framer Motion", "UI/UX Design", "RESTful APIs", "Swift", "UIKit", "MySQL", "Supabase", "Firebase"
+  ];
+
+  const techLogos = [
+    { node: <SiReact />, title: "React" },
+    { node: <SiNextdotjs />, title: "Next.js" },
+    { node: <SiTypescript />, title: "TypeScript" },
+    { node: <SiNodedotjs />, title: "Node.js" },
+    { node: <SiMongodb />, title: "MongoDB" },
+    { node: <SiTailwindcss />, title: "TailwindCSS" },
+    { node: <SiGraphql />, title: "GraphQL" },
+    { node: <SiFramer />, title: "Framer Motion" },
+    { node: <SiFigma />, title: "UI/UX Design" },
+    { node: <TbApi />, title: "RESTful APIs" },
+    { node: <SiSwift />, title: "Swift" },
+    { node: <SiApple />, title: "UIKit" },
+    { node: <SiMysql />, title: "MySQL" },
+    { node: <SiSupabase />, title: "Supabase" },
+    { node: <SiFirebase />, title: "Firebase" },
   ];
 
   // Animation controls
@@ -146,8 +171,29 @@ export default function AboutSection() {
                 Skills & Technologies
               </motion.h3>
               
+              {/* Scrolling icon loop */}
               <motion.div 
-                className="flex flex-wrap justify-center gap-3 mb-16"
+                className="w-full overflow-hidden mb-10 relative"
+                variants={itemVariants}
+                style={{ height: '80px' }}
+              >
+                <LogoLoop
+                  logos={techLogos}
+                  speed={60}
+                  direction="left"
+                  logoHeight={36}
+                  gap={48}
+                  hoverSpeed={15}
+                  scaleOnHover
+                  fadeOut
+                  fadeOutColor="#000000"
+                  ariaLabel="Technologies"
+                />
+              </motion.div>
+
+              {/* Text skill badges */}
+              <motion.div 
+                className="flex flex-wrap justify-center gap-3 mb-16 max-w-3xl mx-auto px-4"
                 variants={containerVariants}
               >
                 {skills.map((skill, index) => (
@@ -172,7 +218,7 @@ export default function AboutSection() {
               
               <motion.div variants={itemVariants}>
                 <a
-                  href="https://drive.google.com/file/d/1zfv3XfRi-CdlhuG73sj8AHyGrUGmeP1O/view?usp=sharing"
+                  href="https://drive.google.com/file/d/1sot9MB-QowMMInh-WkJYrS8_rE17urN-/view?usp=sharing"
                   download
                   className="group relative inline-flex items-center justify-center px-8 py-4 overflow-hidden font-medium text-white transition duration-300 ease-out border-2 border-purple-500 rounded-full shadow-md"
                 >

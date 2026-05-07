@@ -20,6 +20,21 @@ import {
 const projects = [
   {
     id: 1,
+    title: "ParentBud",
+    description:
+      "A parenting support iOS application offering contextual, low-pressure guidance, personalized content, and a supportive community (ParentPods) based on child age and real-life situations.",
+    image: "/ParentBud-Hero.png",
+    category: "iOS Application",
+    liveLink: "https://parentbud.vercel.app/",
+    githubLink: "#",
+    technologies: ["iOS", "Swift", "Personalization Engine", "Community", "Care Cards"],
+    icon: <HiLightningBolt className="text-pink-400 w-8 h-8" />,
+    featured: true,
+    bgColor: "from-pink-900/20 via-black/60 to-purple-900/20",
+    accentColor: "pink",
+  },
+  {
+    id: 2,
     title: "Treasure Hunt AI-Searching Techniques",
     description:
       "Developed interactive treasure hunt visualization in React showcasing DFS, BFS, and A* algorithms. Implemented priority queue and graph traversal techniques with responsive step-by-step animation.",
